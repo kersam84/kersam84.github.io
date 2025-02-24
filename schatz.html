@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Schatzsuche</title>
+    <style>
+        body {
+            font-family: helvetica, arial, sans-serif;
+            font-size: 200%;
+            margin: 1em;
+            color: gray;
+        }
+
+        h1 {
+            color: darkgreen;
+            text-align: center;
+        }
+
+        p {
+            margin-bottom: 1em;
+        }
+
+        .question li {
+            margin-bottom: 0.5em;
+        }
+
+        a {
+            color: darkgreen;
+        }
+
+        img {
+            width: 100%;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+
+    </style>
+  </head>
+  <body>
+    <main class="content">
+        <h1>Rätsel</h1>
+        <p>Ein Waldarbeiter hat zwei Gestalten mit einer Truhe davonreiten sehen.
+            Wohin? Löst zuerst das Rätsel, dann sagt er es euch!
+        </p>
+        <div>
+            <div class="question">
+                <div>Wie heißt der Bruder von Tina?</div>
+                <ul class="answers">
+                    <li><a href="#">Valentin</a></li>
+                    <li><a href="#">Martin</a></li>
+                    <li data-correct="true"><a href="#">Holger</a></li>
+                </ul>
+            </div>
+            <div class="question" style="display: none">
+                <div>Wie nennt Bibi ihren Besen?</div>
+                <ul class="answers">
+                    <li><a href="#">Kaiserschmarrn</a></li>
+                    <li data-correct="true"><a href="#">Kartoffelbrei</a></li>
+                    <li><a href="#">Kartoffelsuppe</a></li>
+                </ul>
+            </div>
+            <div class="question" style="display: none">
+                <div>Wie heißt das Pferd von Tina?</div>
+                <ul class="answers">
+                    <li data-correct="true"><a href="#">Amadeus</a></li>
+                    <li><a href="#">Sabrina</a></li>
+                    <li><a href="#">Max</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="correct" style="display: none">
+            Super, die Antworten sind richtig!
+            Folgt den Hinweisen zum dem Schatz:
+            <img src="01.jpg">
+            <img src="02.jpg">
+            <img src="03.jpg">
+            <img src="04.jpg">
+            <img src="05.jpg">
+            <img src="06.jpg">
+            <img src="07.jpg">
+            <img src="08.jpg">
+            <img src="09.jpg">
+            <img src="10.jpg">
+        </div>
+        <div class="notcorrect" style="display: none">
+            Fast richtig. <a href="">Versucht es nochmal!</a>
+        </div>
+        <script type="text/javascript">
+            let allCorrect = true;
+
+            function solutionClick(evt) {
+                const parent = evt.target.parentNode;
+                const correct = parent.dataset.correct === "true";
+                if (!correct) {
+                    allCorrect = false;
+                }
+                const q = parent.closest(".question");
+                q.style.display = "none";
+                const qNext = q.nextElementSibling;
+                if (qNext) {
+                    qNext.style.display = "block";
+                } else {
+                    console.log(allCorrect);
+                    if (allCorrect) {
+                        document.querySelector(".correct").style.display = "block";
+                    } else {
+                        document.querySelector(".notcorrect").style.display = "block";
+                    }
+                }
+            }
+            window.addEventListener('DOMContentLoaded', () => {
+                for (const link of document.querySelectorAll(".answers a")) {
+                    link.addEventListener("click", solutionClick);
+                }
+            });
+        </script>
+    </main>
+  </body>
+</html>
